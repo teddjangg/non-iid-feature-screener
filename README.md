@@ -1,6 +1,6 @@
 # iid-screener
 
-A lightweight, domain-knowledge-free tool for detecting potential IID assumption violations at the feature level.
+A lightweight, domain-knowledge-free tool for detecting potential IID assumption violations at the feature level — specifically, features whose train/test correlation becomes unstable when data is split by row order.
 
 ## Quick Start
 
@@ -51,7 +51,7 @@ gap = corr(feature, target)_train - corr(feature, target)_test
 
 We then look at the **variance of this gap across folds**:
 
-- **KFold** ignores row order → gap variance stays low even for non-IID features
+- **KFold** respects row order but splits data evenly → temporal structure is diluted across folds
 - **TimeSeriesSplit** respects row order → gap variance inflates for non-IID features
 
 If the data were truly IID, both splitters should produce stable, low-variance gaps. When TSSplit variance is significantly higher than KFold variance, it signals that **row order matters** for that feature — a sign of latent temporal structure and potential IID violation.
@@ -87,6 +87,8 @@ The threshold of 2.0 is intentionally conservative. You can adjust it:
 ```python
 result = screen_non_iid_features(X, y, ratio_threshold=3.0)
 ```
+
+KFold uses shuffle=False to ensure reproducibility and fair comparison on the same row ordering. The key difference is not randomness, but how folds are constructed — KFold dilutes temporal structure by splitting evenly, while TSSplit preserves it by always training on the past and testing on the future.
 
 ---
 

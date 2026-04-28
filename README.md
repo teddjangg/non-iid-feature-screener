@@ -105,7 +105,7 @@ A dataset originally designed for cross-sectional use. We expect weak temporal s
 | weekday_is_wednesday | 2.13 | 3.47 |
 | ... | ... | ... |
 
-![Online News Scatter](results/news_scatter.png)
+![Online News Scatter](plots/news_scatter.png)
 
 Keyword-related features (`kw_*`) and topic features (`LDA_04`, `data_channel_is_tech`) are flagged. This makes intuitive sense — keyword popularity and content categories tend to drift over time as internet trends evolve.
 
@@ -124,7 +124,7 @@ A genuine time series dataset. We expect strong temporal signal across many feat
 | C6H6(GT) | 2.71 | 2.53 |
 | ... | ... | ... |
 
-![Air Quality Scatter](results/airquality_scatter.png)
+![Air Quality Scatter](plots/airquality_scatter.png)
 
 Temperature, humidity, and pollutant sensor features are flagged — all variables with strong seasonal patterns. The screener captures these without any time column or domain knowledge.
 
